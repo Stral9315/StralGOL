@@ -42,7 +42,7 @@ set(StralGOLFiles
 
 set(StralGOLHeaders
 	"${IncludeDir}/common.h"
-	"${IncludeDir}/StralGOL.h"
+	"${IncludeDir}/stralGOL.h"
 	"${IncludeDir}/game.h"
 	)
 
