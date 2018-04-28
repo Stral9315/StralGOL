@@ -22,12 +22,14 @@ if(WIN32)
 endif()
 
 
-if(MSVC)
+if(${CMAKE_CXX_COMPILER_ID} STREQUAL MSVC)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++latest")
 	if(${CMAKE_VERSION} VERSION_GREATER "3.6.3")
 		set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT StralGOL)
 		message("cmake version > 3.6.3, VS_STARTUP_PROJECT set to StralGOL")
 	endif()
+elseif(${CMAKE_CXX_COMPILER_ID} STREQUAL GNU)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 endif()
 
 add_executable(StralGOL ${PROJECT_SOURCE_DIR}/entry.cpp)
