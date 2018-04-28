@@ -15,10 +15,12 @@ set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/bin)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
-include_directories("${PROJECT_SOURCE_DIR}/include/")
+set(IncludeDir "${PROJECT_SOURCE_DIR}/include")
+set(SourceDir "${PROJECT_SOURCE_DIR}")
+include_directories(${IncludeDir})
 
 if(WIN32)
-	include_directories("${PROJECT_SOURCE_DIR}/include/pdcurses/")
+	include_directories("${IncludeDir}/pdcurses/") #use pdcurses
 endif()
 
 
@@ -32,7 +34,23 @@ elseif(${CMAKE_CXX_COMPILER_ID} STREQUAL GNU)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 endif()
 
-add_executable(StralGOL ${PROJECT_SOURCE_DIR}/entry.cpp)
+set(StralGOLFiles
+	"${SourceDir}/entry.cpp"
+	"${SourceDir}/game.cpp"
+	)
+
+
+set(StralGOLHeaders
+	"${IncludeDir}/common.h"
+	"${IncludeDir}/StralGOL.h"
+	"${IncludeDir}/game.h"
+	)
+
+
+source_group("Headers" FILES ${StralGOLHeaders})
+
+add_executable(StralGOL ${StralGOLFiles} ${StralGOLHeaders})
+
 if(WIN32)
 	find_library(PDCURSES_LIB pdcurses lib)
 elseif(UNIX)
