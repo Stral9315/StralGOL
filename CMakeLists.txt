@@ -1,6 +1,6 @@
 # Specify the minimum version for CMake
 
-cmake_minimum_required(VERSION 3.6)
+cmake_minimum_required(VERSION 3.0.2)
 project(StralGOL)
 
 set (StralGOL_VERSION_MAJOR 0)
@@ -16,13 +16,18 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
 include_directories("${PROJECT_SOURCE_DIR}/include/")
+
 if(WIN32)
 	include_directories("${PROJECT_SOURCE_DIR}/include/pdcurses/")
 endif()
-set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT StralGOL)
+
 
 if(MSVC)
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++latest")
+	if(${CMAKE_VERSION} VERSION_GREATER "3.6.3")
+		set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT StralGOL)
+		message("cmake version > 3.6.3, VS_STARTUP_PROJECT set to StralGOL")
+	endif()
 endif()
 
 add_executable(StralGOL ${PROJECT_SOURCE_DIR}/entry.cpp)
